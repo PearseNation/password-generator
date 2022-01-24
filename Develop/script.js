@@ -12,6 +12,9 @@ function writePassword() {
 
 function generatePassword() {
   var seedString = '';
+  var lowLetterList = 'qwertyuiopasdfghjklzxcvbnm'; // Used latter for concatenating without making the if statements messy.
+  var upLetterList = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+  var specLetterList = '!@#$%^&*()_+';
   password = '';
 
   var passwordLength = prompt('Choose password length between 8 and 128 characters (ex. "15").'); //Prompt for getting a length value and a following while statement to return the prompt if the value is out of bounds continuously.
@@ -23,16 +26,22 @@ function generatePassword() {
   var upperCase = prompt('Would you like to include uppercase letters? Y/N'); // Create a variable and prompt for including uppercase charcters.
   var specialCase = prompt('Would you like to include special characters? Y/N'); // Create a variable and prompt for including special charcters.
 
-  if (lowerCase.toLowerCase() == 'y'){ // If lowercase was selected, seedString is concatinated with lowercase letters.
-    seedString = seedString + 'qwertyuiopasdfghjklzxcvbnm';
+  if (lowerCase.toLowerCase() == 'y'){ // If lowercase was selected, seedString is concatenated with lowercase letters.
+    seedString += lowLetterList;
+    password += lowLetterList.charAt(Math.floor(Math.random() * passwordLength)); // Adds a single random character from the lowLetterList to ensure that it ends up in the final password.
+    passwordLength = passwordLength -1; // Since a single letter is being added the passwordLength must be shortened by the same amount. Otherwise the password will be a character longer than expected.
   }
   
   if (upperCase.toLowerCase() == 'y'){ // If lowercase was selected, seedString is concatinated with uppercase letters.
-    seedString = seedString + 'QWERTYUIOPASDFGHJKLZXCVBNM';
+    seedString += upLetterList;
+    password += upLetterList.charAt(Math.floor(Math.random() * passwordLength)); // Adds a single random letter from the upLetterList
+    passwordLength = passwordLength -1;
   }
 
   if (specialCase.toLowerCase() == 'y'){ // If lowercase was selected, seedString is concatinated with special characters.
-    seedString = seedString + '!@#$%^&*()_+';
+    seedString += specLetterList;
+    password += specLetterList.charAt(Math.floor(Math.random() * passwordLength)); // Adds a single random letter from the specLetterList
+    passwordLength = passwordLength -1;
   }
 
   if (seedString === ''){ // Alert the user if the seedString is empty and ask them to start over.
